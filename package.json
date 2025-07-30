@@ -1,0 +1,63 @@
+{
+  "name": "prospectforge-ai",
+  "version": "1.0.0",
+  "description": "A Free, Local, Automated Outreach System using local AI models",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "build-win": "electron-builder --win",
+    "build-mac": "electron-builder --mac",
+    "build-linux": "electron-builder --linux",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "keywords": [
+    "electron",
+    "ai",
+    "outreach",
+    "automation",
+    "local",
+    "ollama",
+    "stable-diffusion"
+  ],
+  "author": "ProspectForge AI",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.6",
+    "puppeteer": "^21.6.1",
+    "axios": "^1.6.2",
+    "nodemailer": "^6.9.7",
+    "form-data": "^4.0.0",
+    "cheerio": "^1.0.0-rc.12",
+    "path": "^0.12.7",
+    "fs-extra": "^11.2.0"
+  },
+  "build": {
+    "appId": "com.prospectforge.ai",
+    "productName": "ProspectForge AI",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "node_modules/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icon.png"
+    }
+  }
+}
