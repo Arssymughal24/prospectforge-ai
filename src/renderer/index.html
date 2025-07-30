@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProspectForge AI</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-robot"></i> ProspectForge AI</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" data-page="dashboard" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#" data-page="campaigns"><i class="fas fa-bullhorn"></i> Campaigns</a></li>
+                <li><a href="#" data-page="leads"><i class="fas fa-users"></i> Leads</a></li>
+                <li><a href="#" data-page="settings"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Page -->
+            <div id="dashboard-page" class="page active">
+                <div class="page-header">
+                    <h1>Dashboard</h1>
+                    <button id="new-campaign-btn" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> New Campaign
+                    </button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-bullhorn"></i></div>
+                        <div class="stat-content">
+                            <h3 id="total-campaigns">0</h3>
+                            <p>Total Campaigns</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                        <div class="stat-content">
+                            <h3 id="total-leads">0</h3>
+                            <p>Total Leads</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="stat-content">
+                            <h3 id="emails-sent">0</h3>
+                            <p>Emails Sent</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stat-content">
+                            <h3 id="pending-review">0</h3>
+                            <p>Pending Review</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-campaigns">
+                    <h2>Recent Campaigns</h2>
+                    <div id="recent-campaigns-list" class="campaigns-list">
+                        <!-- Recent campaigns will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Processing Status -->
+                <div id="processing-status" class="processing-status" style="display: none;">
+                    <div class="processing-content">
+                        <div class="spinner"></div>
+                        <h3>Processing Campaign</h3>
+                        <p id="processing-message">Initializing...</p>
+                        <div class="progress-bar">
+                            <div id="progress-fill" class="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campaigns Page -->
+            <div id="campaigns-page" class="page">
+                <div class="page-header">
+                    <h1>Campaigns</h1>
+                    <button id="new-campaign-btn-2" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> New Campaign
+                    </button>
+                </div>
+                <div id="campaigns-list" class="campaigns-list">
+                    <!-- Campaigns will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Leads Page -->
+            <div id="leads-page" class="page">
+                <div class="page-header">
+                    <h1>Leads</h1>
+                    <select id="campaign-filter" class="form-select">
+                        <option value="">All Campaigns</option>
+                    </select>
+                </div>
+                <div id="leads-list" class="leads-list">
+                    <!-- Leads will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Settings Page -->
+            <div id="settings-page" class="page">
+                <div class="page-header">
+                    <h1>Settings</h1>
+                    <button id="save-settings-btn" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Settings
+                    </button>
+                </div>
+
+                <div class="settings-content">
+                    <div class="settings-section">
+                        <h2><i class="fas fa-robot"></i> AI Configuration</h2>
+                        <div class="form-group">
+                            <label for="ollama-url">Ollama Server URL</label>
+                            <input type="text" id="ollama-url" class="form-input" placeholder="http://localhost:11434">
+                            <button id="test-ollama-btn" class="btn btn-secondary">Test Connection</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="ollama-model">Ollama Model</label>
+                            <select id="ollama-model" class="form-select">
+                                <option value="llama3">Llama 3</option>
+                                <option value="mistral">Mistral</option>
+                                <option value="phi3">Phi-3</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sd-url">Stable Diffusion URL</label>
+                            <input type="text" id="sd-url" class="form-input" placeholder="http://127.0.0.1:7860">
+                            <button id="test-sd-btn" class="btn btn-secondary">Test Connection</button>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h2><i class="fas fa-envelope"></i> Email Configuration</h2>
+                        <div class="form-group">
+                            <label for="email-provider">Email Provider</label>
+                            <select id="email-provider" class="form-select">
+                                <option value="gmail">Gmail</option>
+                                <option value="outlook">Outlook</option>
+                                <option value="custom">Custom SMTP</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sender-name">Sender Name</label>
+                            <input type="text" id="sender-name" class="form-input" placeholder="Your Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email-user">Email Address</label>
+                            <input type="email" id="email-user" class="form-input" placeholder="your.email@gmail.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="email-password">Email Password / App Password</label>
+                            <input type="password" id="email-password" class="form-input" placeholder="Your email password">
+                        </div>
+                        <div id="custom-smtp-settings" style="display: none;">
+                            <div class="form-group">
+                                <label for="smtp-host">SMTP Host</label>
+                                <input type="text" id="smtp-host" class="form-input" placeholder="smtp.example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="smtp-port">SMTP Port</label>
+                                <input type="number" id="smtp-port" class="form-input" placeholder="587">
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="smtp-secure"> Use SSL/TLS
+                                </label>
+                            </div>
+                        </div>
+                        <button id="test-email-btn" class="btn btn-secondary">Send Test Email</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- New Campaign Modal -->
+        <div id="campaign-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Create New Campaign</h2>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="campaign-form">
+                        <div class="form-group">
+                            <label for="business-type">Business Type</label>
+                            <input type="text" id="business-type" class="form-input" placeholder="e.g., restaurants, dental clinics, law firms" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" class="form-input" placeholder="e.g., New York, NY" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="number-of-leads">Number of Leads</label>
+                            <input type="number" id="number-of-leads" class="form-input" min="1" max="50" value="10" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancel-campaign">Cancel</button>
+                    <button type="submit" form="campaign-form" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i> Forge Campaign
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lead Details Modal -->
+        <div id="lead-modal" class="modal">
+            <div class="modal-content large">
+                <div class="modal-header">
+                    <h2 id="lead-modal-title">Lead Details</h2>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div id="lead-details-content">
+                        <!-- Lead details will be loaded here -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="close-lead-modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="send-email-btn" style="display: none;">
+                        <i class="fas fa-paper-plane"></i> Send Email
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div id="toast-container" class="toast-container"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
