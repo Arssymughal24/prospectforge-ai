@@ -4,7 +4,7 @@
 
 ProspectForge AI is a powerful desktop application that fully automates the client outreach workflow using 100% free and locally-run AI tools. Simply provide a business type and location, and the software will autonomously find leads, research them, generate personalized AI mockups, and draft outreach emails.
 
-![ProspectForge AI Dashboard](https://via.placeholder.com/800x400/667eea/ffffff?text=ProspectForge+AI+Dashboard)
+![ProspectForge AI Dashboard](https://v3.fal.media/files/penguin/qbs_leszSGlCI8S3XoJqU.jpeg)
 
 ## 🚀 Features
 
