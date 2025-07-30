@@ -1,0 +1,60 @@
+{
+  "ai": {
+    "ollama": {
+      "url": "http://localhost:11434",
+      "model": "llama3",
+      "timeout": 60000
+    },
+    "stableDiffusion": {
+      "url": "http://127.0.0.1:7860",
+      "timeout": 120000,
+      "defaultParams": {
+        "steps": 20,
+        "cfg_scale": 7,
+        "width": 512,
+        "height": 512,
+        "sampler_name": "DPM++ 2M Karras"
+      }
+    }
+  },
+  "email": {
+    "providers": {
+      "gmail": {
+        "service": "gmail",
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "secure": false
+      },
+      "outlook": {
+        "service": "hotmail",
+        "host": "smtp-mail.outlook.com",
+        "port": 587,
+        "secure": false
+      },
+      "yahoo": {
+        "service": "yahoo",
+        "host": "smtp.mail.yahoo.com",
+        "port": 587,
+        "secure": false
+      }
+    }
+  },
+  "scraping": {
+    "maxLeadsPerSearch": 20,
+    "delayBetweenRequests": 2000,
+    "searchEngines": ["duckduckgo"],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+  },
+  "processing": {
+    "enableBrandAnalysis": true,
+    "enableAppConcepts": true,
+    "enableMockupGeneration": true,
+    "enableEmailGeneration": true,
+    "maxConcurrentProcessing": 1
+  },
+  "storage": {
+    "databasePath": "./prospects.db",
+    "mockupsDirectory": "./mockups",
+    "maxMockupSize": "5MB"
+  }
+}
